@@ -10,7 +10,7 @@
 
 
 \title{CAI 4104: Machine Learning Engineering\\
-	\large Project Report:  {\textcolor{purple}{Title of the Project}}} %% TODO: replace with the title of your project
+	\large Project Report:  {\textcolor{purple}{Image Classification Using a CNN}}} %% TODO: replace with the title of your project
 	
 	
 	
@@ -18,19 +18,19 @@
 %% Comment out as needed and designate a point of contact
 %% Add / remove names as necessary
 \author{
-        Your Name \\{\em (Point of Contact)} \\
-        email1@ufl.edu\\
+        Sebastian Villamizar \\
+        villamizar.s@ufl.edu\\
         \and
-        Member 2's Name \\
-        email2@ufl.edu\\
+        Jason Chen \\
+        jchen8@ufl.edu\\
         \and
-        Member 3's Name \\
-        email3@ufl.edu\\
+        Matthew Segura \\
+        matthewsegura@ufl.edu\\
         \and
-        Member 4's Name \\
-        email4@ufl.edu\\
+        Adrian Lehnhaeuser \\
+        alehnhaeuser@ufl.edu\\
         \and
-        Member 5's Name \\
+        Logan Dukes\\
         email5@ufl.edu\\
 }
 
@@ -56,9 +56,9 @@
 %% - What is the project about and what is notable about the approach and results?
 %%
 \section{Introduction}
-
+The final project for CAI4104 is about implementing a complete ML pipeline for object classification from images of everyday objects. We classified 12 objects: pen, paper, book, clock, phone, laptop, chair, desk, water bottle, keychain, backpack, calculator. To accomplish this, we used a Convolutional Neural Network because it is well-suited to computer tasks on image data. CNNs have high memory usage during training so we leveraged computing power from HiPerGator and Google Colab. TODO: ADD SIMPLE RESULTS
 % TODO:
-Write here. You can cite scholarly work like this~\cite{murphy2022probabilistic}. You can also include URLs in a footnote like this.\footnote{UCI repository: \url{https://archive.ics.uci.edu/}.}
+%Write here. You can cite scholarly work like this~\cite{murphy2022probabilistic}. You can also include URLs in a footnote %like this.\footnote{UCI repository: \url{https://archive.ics.uci.edu/}.}
 
 
 
@@ -70,9 +70,10 @@ Write here. You can cite scholarly work like this~\cite{murphy2022probabilistic}
 %% - What is the task and approach (ML techniques)?
 %%
 \section{Approach}
+To implement our pipeline we imported several python libraries: numpy, pandas, tensorflow, sklearn, and pytorch. These libraries helped us process the data and train the model. First, we applied label encoding to convert the object classes into integer class labels ranging from 0 to 11. These integer labels are compatible with the Sparse Categorical Cross Entropy loss function used in training our CNN model. To load and preprocess the image data we iterated over each image file and added them to a numpy array X, our feature matrix, and the labels to Y. Since the images have RGB values that range from 0 to 255, we normalized the data by dividing each pixel value by 255 to get them in the range [0, 1]. This is important because it accelerates convergence and improves numerical stability by stabilizing the gradients calculated by the optimizer, Adam. Then we used a standard seed, 42, and an 80, 10, 10 percent training, test, and validation split. We tested this data on a simple CNN architecture using tensorflow. 
 
-% TODO:
-Write here. 
+The architecture consists of 3 convolutional layers with filter size 3x3, increasing channel depth (32, 64, 128), each with ReLU activation and max-pooling layers. This is followed by a flattening layer, a dense layer with 256 units, a drouput layer with a 0.5 rate, and finally a dense output layer with 12 units and softmax activation. After training this model over 30 epochs using the adam optimizer and SparseCategoricalCrossentropy loss function, we achieved a training accuracy of ~97\% and a loss of 0.0755. But when we evaluaed it on the unseen test data, the accuracy dropped significantly to 56\%. Therefore, our model was overfitting due to a lack of data augmentation. To augment the data we used a YouTube video by codebasics to guide us\footnote{Data augmentation to address overfitting: \url{https://www.youtube.com/watch?v=mTVf7BN7S8w&list=WL&index=2&t=1601s}.} For every input we generated multiple new samples using edge enhancement, smoothing, grayscale, gaussian blur, oversaturation, and color inversion. This increased amount of images from 4757 to 57084. 
+
 
 
 
