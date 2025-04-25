@@ -1,11 +1,12 @@
 \documentclass[10pt]{article}
 
+%\usepackage{hyperref}
 \usepackage[left=0.8in,right=0.8in,top=0.15in,bottom=0.8in]{geometry}
 \usepackage{xcolor}
-\usepackage{hyperref}
 
-\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
-\urlstyle{rm}
+
+%\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
+%\urlstyle{rm}
 \usepackage{url}
 
 
@@ -88,9 +89,12 @@ The architecture consists of 3 convolutional layers with filter size 3x3, increa
 \section{Evaluation Methodology}
 
 % TODO:
-Write here. 
-
-
+We used accuracy as our main metric (number of correct labels / total number of examples). A simple baseline to use would be to always guess the most common class. In the given dataset, 
+the water bottle class had the highest number of examples (418) and the total number of images was 4,757, so a baseline accuracy would be 
+\begin{equation}
+        \frac{418}{4,757} \approx 0.0878705066218205.
+\end{equation}
+We split did an 80--10--10 train-validation-test set split.
 
 
 %% TODO: write about your results/findings
