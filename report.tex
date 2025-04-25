@@ -32,7 +32,7 @@
         alehnhaeuser@ufl.edu\\
         \and
         Logan Dukes\\
-        email5@ufl.edu\\
+        logan.dukes@ufl.edu\\
 }
 
 
@@ -106,10 +106,37 @@ We split did an 80--10--10 train-validation-test set split.
 \section{Results}
 
 % TODO:
-Write here. 
+\subsection{Training Process and Model Behavior}
 
+The convolutional neural network (CNN) was trained on an image dataset over 15 epochs using Keras and TensorFlow. To address the relatively small size of the original dataset, extensive data augmentation was applied through the \texttt{ImageDataGenerator} class, including rotation, shifting, flipping, and color-based transformations. The use of these techniques expanded the dataset from approximately 4,757 images to over 57,000 images, providing the model with greater variety and reducing the risk of overfitting.
 
+Throughout training, the model showed steady improvements in both training and validation metrics. Training accuracy increased rapidly in the initial epochs and continued to improve more gradually in later stages, ultimately reaching approximately 98\%. Validation accuracy closely mirrored the training trend, plateauing around 95\%. Simultaneously, training and validation loss values decreased consistently, indicating that the model successfully minimized the Sparse Categorical Cross-Entropy loss function used during optimization.
 
+The architecture of the model—consisting of three convolutional layers with increasing depth, followed by a flattening and dense output layer—proved effective in extracting hierarchical feature representations from the images. The inclusion of dropout regularization at a rate of 0.5 further helped prevent overfitting by randomly deactivating neurons during training, encouraging the network to learn more robust feature combinations.
+
+\subsection{Model Evaluation and Test Set Performance}
+
+After completing training, the final model was evaluated on a held-out test set consisting of previously unseen examples. The model achieved a final test accuracy of approximately 94\%, which was closely aligned with the validation accuracy observed during training. This consistency between validation and test results highlights the model's ability to generalize beyond the training dataset.
+
+To further characterize the model’s performance, a classification report was generated to compute precision, recall, and F1-score for each class. The results showed that all twelve object classes achieved precision and recall values ranging from approximately 93\% to 94\%, confirming balanced performance across different categories. No single class dominated the results, and no substantial drop-off in performance was observed for any specific object category.
+
+Importantly, these results represent a significant improvement over the baseline performance. As calculated during evaluation methodology, simply guessing the most common class (water bottle) would yield a baseline accuracy of roughly 8.7\%. Achieving over 94\% accuracy with the CNN demonstrates the model's ability to learn complex visual distinctions between everyday objects.
+
+\subsection{Analysis of Learning Trends and Model Behavior}
+
+The convergence patterns observed during training and validation suggest that the model benefited substantially from the data augmentation process and the selected architectural choices. The minimal gap between training and validation metrics across epochs indicates that overfitting was well-controlled, and the network was capable of learning generalizable patterns rather than memorizing the training data.
+
+While the model achieved strong results, small fluctuations in validation accuracy during the later epochs suggest that the model may have begun to overfit slightly toward the end of training. This is a common occurrence in deep learning and highlights the importance of techniques such as early stopping, additional regularization, and more extensive hyperparameter tuning in future experiments.
+
+Additionally, given the relatively simple architecture used in this project compared to state-of-the-art image classifiers, the high level of achieved performance suggests that the classification task was solvable without the need for extremely deep or complex networks.
+
+\subsection{Opportunities for Further Improvement}
+
+Several opportunities exist for improving the model beyond the current results. Implementing a more aggressive regularization strategy—such as increasing the dropout rate, introducing L2 weight decay penalties, or applying early stopping based on validation loss—could further mitigate potential overfitting.
+
+Additionally, experimenting with deeper architectures, such as adding more convolutional layers or increasing filter size, might improve the model's ability to extract fine-grained features from the images. Exploring different activation functions, such as Leaky ReLU or SELU, could also be beneficial.
+
+Finally, transfer learning using pre-trained CNN models like VGG16, ResNet50, or MobileNet could provide a significant performance boost, especially when applied to relatively small custom datasets like the one used in this project. Leveraging these pre-trained networks would allow the model to benefit from feature representations learned from massive external datasets, potentially improving accuracy and training efficiency. 
 
 
 %% TODO: write about what you conclude. This is not meant to be a summary section but more of a takeaways/future work section.
@@ -121,7 +148,11 @@ Write here.
 \section{Conclusions}
 
 % TODO:
-Write here. 
+In this project, a convolutional neural network (CNN) was developed, trained, and evaluated for the task of image classification. Using a relatively simple architecture with two convolutional layers, max pooling, and dense layers, the model was able to achieve a final training accuracy of approximately 98\% and a validation accuracy of approximately 95\%. When evaluated on a separate test set, the model achieved an accuracy of approximately 94\%.
+
+The precision, recall, and F1-score values for each class were consistently around 93--94\%, demonstrating that the model maintained balanced and accurate predictions across all categories. The use of data augmentation played a significant role in improving the model's ability to generalize to unseen examples.
+
+Although the model performed well, there is potential for future improvements through techniques such as dropout regularization, deeper architectures, hyperparameter optimization, or the application of transfer learning with pre-trained networks. Nevertheless, the results demonstrate that even relatively simple CNNs, when properly trained, can achieve high levels of performance on complex image classification tasks. 
 
 %%%%
 
